@@ -8,6 +8,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\IncomeDetailController;
 use App\Http\Controllers\IncomeTransactionController;
 use App\Http\Controllers\LocationController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\TenantController;
 use App\Http\Controllers\UserController;
@@ -26,6 +27,7 @@ Route::prefix('auth')->group(function () {
 //middleware untuk menandakan jalur tersebut mewajibkan untuk login terlebih dahulu
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/', [HomeController::class, 'index']);
+    Route::resource('/profile', ProfileController::class);
     Route::resource('/category', CategoryController::class);
     Route::resource('/users', UserController::class);
     Route::resource('/locations', LocationController::class);

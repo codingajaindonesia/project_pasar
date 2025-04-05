@@ -147,14 +147,14 @@
 
                             <li>
                                 <a href="{{ url('locations') }}" class="waves-effect">
-                                    <i class="bx bx-task"></i>
+                                    <i class="bx bx-store-alt "></i>
                                     <span key="t-categories">Lokasi</span>
                                 </a>
                             </li>
 
                             <li>
                                 <a href="{{ url('tenants') }}" class="waves-effect">
-                                    <i class="bx bx-task"></i>
+                                    <i class="bx bxs-user-detail"></i>
                                     <span key="t-categories">Penyewa</span>
                                 </a>
                             </li>

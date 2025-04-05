@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Tenant;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 
@@ -26,7 +27,8 @@ class ExpenseTransactionController extends Controller
      */
     public function create()
     {
-        return view('contents/transactions/expense/_form');
+        $tenants = Tenant::all();
+        return view('contents/transactions/expense/_form', compact('tenants'));
     }
 
     /**
@@ -41,16 +43,21 @@ class ExpenseTransactionController extends Controller
         try {
             $request->validate(
                 [
+                    'tenant_id' => 'required|exists:tenants,id',
                     'transaction_date' => 'required|date',
                     'notes' => 'nullable',
                 ]
             );
+            $numberCount = Transaction::where('transaction_date', $transactionDate)->withTrashed()->count();
+            $id = 1000+$numberCount+1;
+            $prefix = "TRXOUT-".date('Ymd', strtotime($request->transaction_date)).$id;
             Transaction::create([
-                'invoice' => "TRXOUT-".date('Ymd', strtotime($request->transaction_date)),
+                'invoice' => $prefix,
                 'transaction_date' => $request->transaction_date,
                 'types' => 'out',
                 'notes' => $request->notes,
-                'user_id' => auth()->user()->id,
+                'tenant_id' => $request->tenant_id,
+                'created_by' => auth()->user()->id,
             ]);
             return redirect()->route('transactions-expense.index')->with('status', 'Data berhasil disimpan');
         } catch (\Exception $e) {
@@ -72,8 +79,10 @@ class ExpenseTransactionController extends Controller
      */
     public function edit(string $id)
     {
+        $tenants = Tenant::all();
+
         $transaction = Transaction::find($id);
-        return view('contents/transactions/expense/_form', compact('transaction'));
+        return view('contents/transactions/expense/_form', compact('transaction', 'tenants'));
     }
 
     /**

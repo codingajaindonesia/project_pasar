@@ -45,6 +45,17 @@
                         </div>
                     </div>
                     @endif
+                    <div class="mb-3 row">
+                        <label for="example-text-input" class="col-md-2 col-form-label">Penyewa</label>
+                        <div class="col-md-10">
+                            <select required class="form-control" name="tenant_id" id="example-text-input">
+                                <option value="">Pilih Penyewa</option>
+                                @foreach ($tenants as $t)
+                                    <option value="{{ $t->id }}" @if(isset($transaction) && $transaction->tenant_id == $t->id) selected @endif>{{ $t->user->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
 
                     <div class="mb-3 row">
                         <label for="example-text-input" class="col-md-2 col-form-label">Keterangan</label>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Tenant;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 
@@ -26,7 +27,9 @@ class IncomeTransactionController extends Controller
      */
     public function create()
     {
-        return view('contents/transactions/income/_form');
+        $tenants = Tenant::all();
+
+        return view('contents/transactions/income/_form', compact('tenants'));
     }
 
     /**
@@ -35,22 +38,25 @@ class IncomeTransactionController extends Controller
     public function store(Request $request)
     {
         $transactionDate = $request->transaction_date;
-        if(Transaction::where('transaction_date', $transactionDate)->where('types', 'in')->exists()){
-            return redirect()->back()->with('error', 'Tanggal transaksi pemasukan sudah ada silahkan cek kembali !!!');
-        }
+    
         try {
             $request->validate(
                 [
+                    'tenant_id' => 'required|exists:tenants,id',
                     'transaction_date' => 'required|date',
                     'notes' => 'nullable',
                 ]
             );
+            $numberCount = Transaction::where('transaction_date', $transactionDate)->withTrashed()->count();
+            $id = 1000+$numberCount+1;
+            $prefix = "TRXIN-".date('Ymd', strtotime($request->transaction_date)).$id;
             Transaction::create([
-                'invoice' => "TRXIN-".date('Ymd', strtotime($request->transaction_date)),
+                'tenant_id' => $request->tenant_id,
+                'invoice' => $prefix ,
                 'transaction_date' => $request->transaction_date,
                 'types' => 'in',
                 'notes' => $request->notes,
-                'user_id' => auth()->user()->id,
+                'created_by' => auth()->user()->id,
             ]);
             return redirect()->route('transactions-income.index')->with('status', 'Data berhasil disimpan');
         } catch (\Exception $e) {
@@ -73,7 +79,9 @@ class IncomeTransactionController extends Controller
     public function edit(string $id)
     {
         $transaction = Transaction::find($id);
-        return view('contents/transactions/income/_form', compact('transaction'));
+        $tenants = Tenant::all();
+
+        return view('contents/transactions/income/_form', compact('transaction', 'tenants'));
     }
 
     /**

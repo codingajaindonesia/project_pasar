@@ -83,7 +83,7 @@
                         @foreach ($tenants as $c)
                         
                         <tr>
-                            <td>{{ $c->location->name }}</td>
+                            <td>{{ $c->location?->name }}</td>
                             <td>{{date('d M Y', strtotime($c->start_date)) }}</td>
                             <td>{{date('d M Y', strtotime($c->end_date)) }}</td>
                             <td>{{ $c->user->name }}</td>

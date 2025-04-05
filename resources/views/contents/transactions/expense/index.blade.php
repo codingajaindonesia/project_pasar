@@ -68,6 +68,7 @@
                        
                         <th>Tanggal Transaksi</th>
                         <th>Trx ID</th>
+                        <th>Penyewa</th>
                         <th>Catatan</th>
                         <th>Total</th>
                         <th>Aksi</th>
@@ -80,6 +81,13 @@
                         <tr>
                             <td>{{ date('d-M-Y', strtotime($t->transaction_date)) }}</td>
                             <td>{{ $t->invoice }}</td>
+                            <td>
+                                @if ($t->tenant)
+                                    {{ $t->tenant->user->name }}
+                                @else
+                                    -
+                                @endif
+                            </td>
                             <td>{{ $t->notes }}</td>
                             <td>{{ number_format($t->total, 0, ',', '.') }}</td>
                             <td>
