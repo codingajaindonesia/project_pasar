@@ -14,6 +14,7 @@ use App\Http\Controllers\TenantController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
+Route::get('/', [HomeController::class, 'index']);
 
 Route::get('login', function(){
     return view('auth/login');
@@ -22,11 +23,15 @@ Route::prefix('auth')->group(function () {
     //Mengatur untuk route atau peralihan page login dan logout akun
     Route::post('login', [AuthController::class, 'verify']);
     Route::post('logout', [AuthController::class, 'logout']);
+    Route::get('forget-password', [AuthController::class, 'showLinkRequestForm'])->name('password.request');
+    Route::post('forget-password', [AuthController::class, 'sendResetLinkEmail'])->name('password.email');
+    
+    Route::get('/reset-password/{token}', [AuthController::class, 'showResetForm'])->name('password.reset');
+    Route::post('/reset-password', [AuthController::class, 'reset'])->name('password.update');
 });
 
 //middleware untuk menandakan jalur tersebut mewajibkan untuk login terlebih dahulu
 Route::group(['middleware' => 'auth'], function () {
-    Route::get('/', [HomeController::class, 'index']);
     Route::resource('/profile', ProfileController::class);
     Route::resource('/category', CategoryController::class);
     Route::resource('/users', UserController::class);
