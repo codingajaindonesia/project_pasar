@@ -10,14 +10,26 @@
                 <h4 class="card-title">Profile User</h4>
           
                 @if (isset($user))
-                    <form id="updateForm" method="POST" action="{{ url('profile/'.$user->id) }}" name="updateForm" data-note="Apakah anda yakin akan merubah data {{ $user->title }} ini ?">
+                    <form id="updateForm" method="POST" enctype="multipart/form-data" action="{{ url('profile/'.$user->id) }}" name="updateForm" data-note="Apakah anda yakin akan merubah data {{ $user->title }} ini ?">
                         @method('PUT')
                 @else
-                    <form id="submitForm" method="POST" action="{{ url('users') }}" name="submitForm">
+                    <form id="submitForm" method="POST" action="{{ url('users') }}" name="submitForm" enctype="multipart/form-data">
                     
                 @endif
                     @csrf
                     
+                    <div class="mb-3 row">
+                        <label for="example-text-input" class="col-md-2 col-form-label">Profile Picture</label>
+                        <div class="col-md-4">
+                            @if(isset($user))
+                                <img src="{{ asset('storage/'.$user->avatar) }}" alt="" width="100px" height="100px">
+                            @endif
+                            <input  class="form-control mt-2" type="file" placeholder="Masukkan nama user ...." name="avatar" 
+                            id="example-text-input"> 
+                        </div>
+                      
+                    </div>
+                
                     <div class="mb-3 row">
                         <label for="example-text-input" class="col-md-2 col-form-label">Nama</label>
                         <div class="col-md-10">

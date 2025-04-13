@@ -65,7 +65,7 @@
                 <table id="datatable-buttons" class="table table-bordered dt-responsive nowrap w-100">
                     <thead>
                     <tr>
-                       
+                        <th>Profile Picture</th>
                         <th>Nama</th>
                         <th>Username</th>
                         <th>Email</th>
@@ -80,6 +80,13 @@
                     <tbody>
                         @foreach ($users as $u)
                         <tr>
+                            <td>
+                                @if($u->avatar)
+                                    <img src="{{ asset('storage/'.$u->avatar) }}" alt="" height="40px" >
+                                @else
+                                    <img src="{{ asset('images/default.png') }}" alt="" height="40px" >
+                                @endif
+                            </td>
                             <td>{{ $u->name }}</td>
                             <td>{{ $u->username }}</td>
                             <td>{{ $u->email }}</td>

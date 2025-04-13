@@ -40,9 +40,10 @@ class UserController extends Controller
                     'email' => 'required|email',
                     'password' => 'required|min:8',
                     'password_confirmation' => 'required|min:8',
-                    'role' => 'required|in:admin,user',
+                    'role' => 'required|in:admin,user,staff',
                     'phone' => 'nullable',
-                    'address' => 'nullable'
+                    'address' => 'nullable',
+                    'avatar' => 'nullable'
                 ]
             );
             if ($request->password !== $request->password_confirmation) {
@@ -50,6 +51,12 @@ class UserController extends Controller
             }
             $payload = $request->all();
             $payload['password'] = bcrypt($request->password);
+            if(isset($request->avatar)) {
+                $avatar = $request->file('avatar');
+                $avatarName = time().'.'.$avatar->getClientOriginalExtension();
+                $avatar->move(public_path('storage/images/avatars'), $avatarName);
+                $payload = array_merge($payload, ['avatar' => "/images/avatars/".$avatarName]);
+            }
             User::create($payload);
             return redirect()->route('users.index')->with('status', 'Data berhasil disimpan');
         } catch (\Exception $e) {
@@ -88,9 +95,10 @@ class UserController extends Controller
                     'email' => 'required|email',
                     'password' => 'nullable|min:8',
                     'password_confirmation' => 'nullable|min:8',
-                    'role' => 'required|in:admin,user',
+                    'role' => 'required|in:admin,user,staff',
                     'phone' => 'nullable',
-                    'address' => 'nullable'
+                    'address' => 'nullable',
+                    'avatar' => 'nullable'
 
                 ]
             );
@@ -108,6 +116,12 @@ class UserController extends Controller
                     return redirect()->back()->with('error', 'Konfirmasi password tidak sama');
                 }
                 $payload = array_merge($payload, ['password' => bcrypt($request->password)]);
+            }
+            if(isset($request->avatar)) {
+                $avatar = $request->file('avatar');
+                $avatarName = time().'.'.$avatar->getClientOriginalExtension();
+                $avatar->move(public_path('storage/images/avatars'), $avatarName);
+                $payload = array_merge($payload, ['avatar' => "/images/avatars/".$avatarName]);
             }
             $user = User::find($id);
             $user->update($payload);

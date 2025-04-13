@@ -20,20 +20,28 @@ class ProfileController extends Controller
                 'password' => 'nullable|min:8',
                 'password_confirmation' => 'nullable|min:8',
                 'phone' => 'nullable',
-                'address' => 'nullable'
+                'address' => 'nullable',
+                'avatar' => 'nullable'
 
             ]
         );
     
         try {
             $user = auth()->user();
-            $user->update([
+            $payload = [
                 'username' => $request->username,
                 'name' => $request->name,
                 'email' => $request->email,
                 'phone' => $request->phone,
                 'address' => $request->address
-            ]);
+            ];
+            if(isset($request->avatar)) {
+                $avatar = $request->file('avatar');
+                $avatarName = time().'.'.$avatar->getClientOriginalExtension();
+                $avatar->move(public_path('storage/images/avatars'), $avatarName);
+                $payload = array_merge($payload, ['avatar' => "/images/avatars/".$avatarName]);
+            }
+            $user->update($payload);
             return redirect()->route('profile.index')->with('status', 'Profile berhasil diupdate');
 
         } catch (\Throwable $th) {

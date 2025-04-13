@@ -47,10 +47,10 @@
 
                             <a href="index.html" class="logo logo-light">
                                 <span class="logo-sm">
-                                    <img src="{{url('assets')}}/images/logo-light.svg" alt="" height="22">
+                                    <img src="{{url('assets')}}/images/logo-light.svg" alt="" height="80">
                                 </span>
                                 <span class="logo-lg">
-                                    <img src="{{url('assets')}}/images/logo-light.png" alt="" height="19">
+                                    <img src="{{url('assets')}}/images/logo-light.png" alt="" height="80">
                                 </span>
                             </a>
                         </div>
@@ -98,7 +98,7 @@
                         <div class="dropdown d-inline-block">
                             <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown"
                             data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <img class="rounded-circle header-profile-user" src="{{url('assets')}}/images/users/avatar-1.jpg"
+                                <img class="rounded-circle header-profile-user" src="{{ asset('storage/'.auth()->user()->avatar) }}"
                                     alt="Header Avatar">
                                 <span class="d-none d-xl-inline-block ms-1" key="t-henry">{{ auth()->user()->name }}</span>
                                 <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
@@ -320,11 +320,11 @@
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-sm-6">
-                                <script>document.write(new Date().getFullYear())</script> © Skote.
+                                {{-- <script>document.write(new Date().getFullYear())</script> © Skote. --}}
                             </div>
                             <div class="col-sm-6">
                                 <div class="text-sm-end d-none d-sm-block">
-                                    Design & Develop by Themesbrand
+                                    {{-- Design & Develop by Themesbrand --}}
                                 </div>
                             </div>
                         </div>
