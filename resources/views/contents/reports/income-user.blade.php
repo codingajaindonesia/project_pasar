@@ -52,31 +52,7 @@
 </div>
 <!-- end page title -->
 
-<div class="row">
-    <div class="col-12">
-        <div class="card">
-            <div class="card-body">
-                <h4 class="card-title">Filter</h4>
-                <form action="{{ url('report/income') }}" method="GET">
-                    <div class="mb-3 row">
-                        <label for="example-text-input" class="col-md-2 col-form-label">Dari Tanggal</label>
-                        <div class="col-md-10">
-                            <input class="form-control" type="date" name="start_date" value="{{ $startDate }}" id="example-text-input"> 
-                        </div>
-                    </div>
-                    <div class="mb-3 row">
-                        <label for="example-search-input" class="col-md-2 col-form-label">Sampai Tanggal</label>
-                        <div class="col-md-10">
-                            <input class="form-control" type="date" name="end_date" value="{{ $endDate }}" id="example-text-input"> 
-                        </div>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Filter</button>
-                    <a href="{{ url('report/income') }}" class="btn btn-secondary">Reset</a>
-                </form>
-            </div>
-        </div>
-    </div> <!-- end col -->
-</div> <!-- end row -->
+
 <div class="row">
     <div class="col-12">
         <div class="card">
@@ -92,7 +68,7 @@
                         <th>Trx ID</th>
                         <th>Catatan</th>
                         <th>Total</th>
-                        <th>Dibuat Oleh</th>
+                        <th>Action</th>
                     </tr>
                     </thead>
 
@@ -104,7 +80,8 @@
                             <td>{{ $t->invoice }}</td>
                             <td>{{ $t->notes }}</td>
                             <td>{{ number_format($t->total, 0, ',', '.') }}</td>
-                            <td>{{ $t->user?->name }}</td>
+                            <td><a href="{{ url('user/report/income/'.$t->id."") }}" class="btn btn-info btn-sm">Detail</a></td>
+
                           
 
 

@@ -33,6 +33,7 @@
 
         {{-- <script src="assets/js/app.js"></script> --}}
 @endsection
+
 @section('content')
  <!-- start page title -->
  <div class="row">
@@ -71,6 +72,8 @@
                         <th>Penyewa</th>
                         <th>Catatan</th>
                         <th>Total</th>
+                        <th>Status</th>
+
                         <th>Aksi</th>
                     </tr>
                     </thead>
@@ -91,6 +94,28 @@
                             <td>{{ $t->notes }}</td>
                             <td>{{ number_format($t->total, 0, ',', '.') }}</td>
                             <td>
+                                @if ($t->status == 'paid')
+                                    
+                                    <span class="btn btn-success btn-sm">Lunas</span>
+                                @else
+                                <span class="btn btn-danger btn-sm">Belum Lunas</span>
+
+                                @endif
+                            </td>
+                            <td>
+
+                                @if ($t->status == 'paid')
+                                <a href="{{ url('transactions-income/'.$t->id."/send-invoice") }}"  class="btn btn-dark btn-sm sendInvoice" id="sendInvoice">Kirim Invoice Pelunasan</a>
+
+                                <a href="{{ url('transactions-income/'.$t->id."/rollback") }}" class="btn btn-primary btn-sm rollbackInvoice" id="rollbackInvoice" >Batal Pembayaran</a>
+                                @else
+                                <a href="{{ url('transactions-income/'.$t->id."/send-invoice") }}"  class="btn btn-dark btn-sm sendInvoice" id="sendInvoice">Kirim Invoice Tagihan</a>
+
+                                <a href="{{ url('transactions-income/'.$t->id."/payment") }}" class="btn btn-success btn-sm approveInvoice" id="approveInvoice">Terima Pembayaran</a>
+
+
+                                    
+                                @endif
                                 <a href="{{ url('transactions-income/'.$t->id."/detail") }}" class="btn btn-info btn-sm">Detail</a>
                                 <a href="{{ url('transactions-income/'.$t->id.'/edit') }}" class="btn btn-warning btn-sm">Edit</a>
                                 <form action="{{ url('transactions-income/'.$t->id) }}" method="POST" style="display:inline;">
@@ -119,3 +144,4 @@
 
 
 @endsection
+

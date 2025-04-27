@@ -110,6 +110,7 @@
                                 @if(isset($tenant))  <p class="text-muted">* Kosongkan jika tidak ingin mengubah password</p> @endif
                         </div>
                     </div>
+                    <input type="hidden" name="role" value="user">
                     <div class="mb-3 ">
                         <hr>
                         <a class="btn btn-warning w-md" href="#" onclick="window.history.back()">Kembali</a>

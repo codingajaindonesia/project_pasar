@@ -40,6 +40,9 @@ Route::group(['middleware' => 'auth'], function () {
     
     Route::resource('transactions-income/{id}/detail', IncomeDetailController::class);
     Route::resource('transactions-income', IncomeTransactionController::class);
+    Route::get('transactions-income/{id}/print', [IncomeTransactionController::class, 'print'])->name('transactions-income.print');
+    Route::get('transactions-income/{id}/send-invoice', [IncomeTransactionController::class, 'sendInvoice'])->name('transactions-income.send-email');
+    Route::get('transactions-income/{id}/payment', [IncomeTransactionController::class, 'approveInvoice'])->name('transactions-income.payment');
 
     Route::resource('transactions-expense/{id}/detail', ExpenseDetailController::class)->names('detail-expense');
     Route::resource('transactions-expense', ExpenseTransactionController::class);
@@ -49,5 +52,11 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('expense', [ReportController::class, 'expense'])->name('report-expense');
         Route::get('all', [ReportController::class, 'all'])->name('report-all');
     });
+    Route::prefix('user/report')->group(function () {
+        Route::get('income', [ReportController::class, 'incomeUser'])->name('report-income-user');
+        Route::get('income/{id}', [ReportController::class, 'detailInvoice'])->name('report-detail-invoice-user');
+
+    });
+
 
 });

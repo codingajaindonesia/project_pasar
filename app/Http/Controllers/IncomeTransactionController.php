@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\SendInvoiceMail;
 use App\Models\Tenant;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class IncomeTransactionController extends Controller
 {
@@ -119,5 +121,39 @@ class IncomeTransactionController extends Controller
         }
     }
 
+    public function approveInvoice(Request $request )  {
+        try {
+            $transaction = Transaction::find($request->id);
+            $transaction->update([
+                'status' => 'paid',
+            ]);
+            return redirect()->route('transactions-income.index')->with('status', 'Data berhasil diapprove');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Data gagal diapprove '.$e->getMessage());
+        } 
+    }
+    public function rollbackInvoice(Request $request)  {
+        try {
+            $transaction = Transaction::find($request->id);
+            $transaction->update([
+                'status' => 'unpaid',
+            ]);
+            return redirect()->route('transactions-income.index')->with('status', 'Data berhasil dirollback');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Data gagal dirollback '.$e->getMessage());
+        }
+        
+    }
+    public function sendInvoice(Request $request, $id)  {
+        try {
+            //Kirim Email SendInvoice Mail Status Invoice, nomor INvoice dan note
+            $transaction = Transaction::where('id',$id)->first();
+            Mail::to($transaction->tenant->user->email)->send(new SendInvoiceMail($transaction));
+            return redirect()->route('transactions-income.index')->with('status', 'Data berhasil dikirim');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Data gagal dikirim '.$e->getMessage());
+            
+        } 
+    }
 
 }

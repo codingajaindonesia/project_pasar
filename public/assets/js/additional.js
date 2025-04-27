@@ -61,5 +61,27 @@ $(document).ready(function() {
             }
         });
     });
+
+    $('.sendInvoice').on('click', function(e) {
+        e.preventDefault();  // Mencegah aksi default
+alert('a    ');
+        // var linkApprove = $(this).data('link');  // Ambil nilai dari data-link
+        // var note = $(this).data('note');  // Ambil nilai dari data-note
+        // var invoice = $(this).data('invoice');  // Ambil nilai dari data-invoice
+        // // Tampilkan SweetAlert2 konfirmasi
+        // Swal.fire({
+        //     title: 'Apakah Anda yakin?',
+        //     text: note,  // Menampilkan pesan konfirmasi berdasarkan data-note
+        //     icon: 'warning',
+        //     showCancelButton: true,
+        //     confirmButtonText: 'Ya, Kirim!',
+        //     cancelButtonText: 'Batal'
+        // }).then((result) => {
+        //     if (result.isConfirmed) {
+        //         // Jika pengguna menekan 'Ya, Kirim!', lanjutkan dengan pengiriman form
+        //         window.location.href = linkApprove;  // Arahkan ke URL yang diambil dari data-link
+        //     }
+        // });
+    });
     
 });

@@ -141,6 +141,7 @@
                                 </a>
                              
                             </li>
+                          
                             @if (auth()->user()->role == 'admin')
                                 
                             <li class="menu-title" key="t-menu">Data Master</li>
@@ -175,10 +176,10 @@
 
                            
 
-                            <li class="menu-title" key="t-apps">Main Menu</li>
-
-                
+                            
+                            
                             @if (auth()->user()->role == 'admin' || auth()->user()->role == 'staff')
+                            <li class="menu-title" key="t-apps">Main Menu</li>
                             <li>
                            
                                 <a href="javascript: void(0);" class="has-arrow waves-effect">
@@ -202,6 +203,14 @@
                                     <li><a href="{{ url('report/expense') }}" key="t-full-calendar">Pengeluaran</a></li>
                                     <li><a href="{{ url('report/all') }}" key="t-full-calendar">Semua Transaksi</a></li>
                                 </ul>
+                            </li>
+                            @endif
+                            @if (auth()->user()->role == 'user')
+                            <li>
+                            <a href="{{ url('user/report/income') }}" class="waves-effect">
+                                <i class="bx bx-chat"></i>
+                                <span key="t-report">Report</span>
+                            </a>
                             </li>
                             @endif
 
@@ -408,6 +417,8 @@
         <script src="{{ url('assets') }}/libs/toastr/build/toastr.min.js"></script>
         <script src="{{url('assets')}}/js/app.js"></script>
         <script src="{{url('assets')}}/js/additional.js"></script>
+        @yield('js')
+
         <script>
         @if (Session::has('status'))
             toastr.success("{{ Session::get('status') }}", "Success", {
@@ -421,9 +432,9 @@
             });
         @endif
             </script>
-        @yield('js')
-       
 
+       
+        
         <!-- App js -->
     </body>
 
