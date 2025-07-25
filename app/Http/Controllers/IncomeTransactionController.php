@@ -149,6 +149,7 @@ class IncomeTransactionController extends Controller
             //Kirim Email SendInvoice Mail Status Invoice, nomor INvoice dan note
             $transaction = Transaction::where('id',$id)->first();
             Mail::to($transaction->tenant->user->email)->send(new SendInvoiceMail($transaction));
+            
             return redirect()->route('transactions-income.index')->with('status', 'Data berhasil dikirim');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Data gagal dikirim '.$e->getMessage());

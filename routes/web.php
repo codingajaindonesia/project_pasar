@@ -43,6 +43,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('transactions-income/{id}/print', [IncomeTransactionController::class, 'print'])->name('transactions-income.print');
     Route::get('transactions-income/{id}/send-invoice', [IncomeTransactionController::class, 'sendInvoice'])->name('transactions-income.send-email');
     Route::get('transactions-income/{id}/payment', [IncomeTransactionController::class, 'approveInvoice'])->name('transactions-income.payment');
+    Route::get('transactions-income/{id}/rollback', [IncomeTransactionController::class, 'rollbackInvoice'])->name('transactions-income.rollback-invoice');
 
     Route::resource('transactions-expense/{id}/detail', ExpenseDetailController::class)->names('detail-expense');
     Route::resource('transactions-expense', ExpenseTransactionController::class);

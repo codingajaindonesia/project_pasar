@@ -92,7 +92,7 @@
                         <th>Trx ID</th>
                         <th>Catatan</th>
                         <th>Total</th>
-                        <th>Dibuat Oleh</th>
+                        {{-- <th>Dibuat Oleh</th> --}}
                     </tr>
                     </thead>
 
@@ -104,7 +104,7 @@
                             <td>{{ $t->invoice }}</td>
                             <td>{{ $t->notes }}</td>
                             <td>{{ number_format($t->total, 0, ',', '.') }}</td>
-                            <td>{{ $t->user->name }}</td>
+                            {{-- <td>{{ $t->user->name }}</td> --}}
                           
 
 

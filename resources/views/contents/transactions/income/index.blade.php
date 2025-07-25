@@ -63,7 +63,7 @@
                 <p class="card-title-desc">Silahkan kelola data pemasukan sesuai dengan kebutuhan anda.
                 </p>
 
-                <table id="datatable-buttons" class="table table-bordered dt-responsive nowrap w-100">
+                <table id="datatable-buttons" class="table table-bordered   w-100">
                     <thead>
                     <tr>
                        
@@ -105,11 +105,11 @@
                             <td>
 
                                 @if ($t->status == 'paid')
-                                <a href="{{ url('transactions-income/'.$t->id."/send-invoice") }}"  class="btn btn-dark btn-sm sendInvoice" id="sendInvoice">Kirim Invoice Pelunasan</a>
+                                <a type="button" data-link="{{ url('transactions-income/'.$t->id."/send-invoice") }}"  class="btn btn-dark btn-sm sendInvoice" id="sendInvoice" data-note="Anda akan mengirim invoice pelunasan ke Penyewa {{ $t->tenant->user->name }}">Kirim Invoice Pelunasan</a>
 
                                 <a href="{{ url('transactions-income/'.$t->id."/rollback") }}" class="btn btn-primary btn-sm rollbackInvoice" id="rollbackInvoice" >Batal Pembayaran</a>
                                 @else
-                                <a href="{{ url('transactions-income/'.$t->id."/send-invoice") }}"  class="btn btn-dark btn-sm sendInvoice" id="sendInvoice">Kirim Invoice Tagihan</a>
+                                <a type="button" href="{{ url('transactions-income/'.$t->id."/send-invoice") }}"  data-link="{{ url('transactions-income/'.$t->id."/send-invoice") }}"  class="btn btn-dark btn-sm sendInvoice" id="sendInvoice" data-note="Anda akan mengirim invoice tagihan ke Penyewa {{ $t->tenant->user->name }}">Kirim Invoice Tagihan</a>
 
                                 <a href="{{ url('transactions-income/'.$t->id."/payment") }}" class="btn btn-success btn-sm approveInvoice" id="approveInvoice">Terima Pembayaran</a>
 
@@ -144,4 +144,28 @@
 
 
 @endsection
-
+@section('js')
+    <script>
+          $('.sendInvoice').on('click', function(e) {
+        e.preventDefault();  // Mencegah aksi default
+// alert('a    ');
+        var linkApprove = $(this).data('link');  // Ambil nilai dari data-link
+        var note = $(this).data('note');  // Ambil nilai dari data-note
+        var invoice = $(this).data('invoice');  // Ambil nilai dari data-invoice
+        // Tampilkan SweetAlert2 konfirmasi
+        Swal.fire({
+            title: 'Apakah Anda yakin?',
+            text: note,  // Menampilkan pesan konfirmasi berdasarkan data-note
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Ya, Kirim!',
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Jika pengguna menekan 'Ya, Kirim!', lanjutkan dengan pengiriman form
+                window.location.href = linkApprove;  // Arahkan ke URL yang diambil dari data-link
+            }
+        });
+    });
+    </script>
+@endsection

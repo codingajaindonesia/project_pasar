@@ -45,7 +45,7 @@
                         </div>
                     </div>
                     @endif
-                    <div class="mb-3 row">
+                    {{-- <div class="mb-3 row">
                         <label for="example-text-input" class="col-md-2 col-form-label">Penyewa</label>
                         <div class="col-md-10">
                             <select required class="form-control" name="tenant_id" id="example-text-input">
@@ -55,7 +55,7 @@
                                 @endforeach
                             </select>
                         </div>
-                    </div>
+                    </div> --}}
                     <div class="mb-3 row">
                         <label for="example-text-input" class="col-md-2 col-form-label">Keterangan</label>
                         <div class="col-md-10">

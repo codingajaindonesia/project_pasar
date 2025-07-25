@@ -43,7 +43,7 @@ class ExpenseTransactionController extends Controller
         try {
             $request->validate(
                 [
-                    'tenant_id' => 'required|exists:tenants,id',
+                    // 'tenant_id' => 'required|exists:tenants,id',
                     'transaction_date' => 'required|date',
                     'notes' => 'nullable',
                 ]

@@ -20,7 +20,11 @@
     <link href="{{ url('assets') }}/libs/toastr/build/toastr.min.css" rel="stylesheet">
         <!-- App Css-->
         <link href="{{url('assets')}}/css/app.min.css" id="app-style" rel="stylesheet" type="text/css" />
+
         @yield('css')
+        
+        <!-- Sweet Alerts js -->
+        <script src="{{url('assets')}}/libs/sweetalert2/sweetalert2.min.js"></script>
     </head>
 
     <body data-sidebar="dark">
@@ -411,8 +415,6 @@
         <script src="{{url('assets')}}/libs/metismenu/metisMenu.min.js"></script>
         <script src="{{url('assets')}}/libs/simplebar/simplebar.min.js"></script>
         <script src="{{url('assets')}}/libs/node-waves/waves.min.js"></script>
-        <!-- Sweet Alerts js -->
-        <script src="{{url('assets')}}/libs/sweetalert2/sweetalert2.min.js"></script>
         
         <script src="{{ url('assets') }}/libs/toastr/build/toastr.min.js"></script>
         <script src="{{url('assets')}}/js/app.js"></script>

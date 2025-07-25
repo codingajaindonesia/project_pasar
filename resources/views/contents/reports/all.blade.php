@@ -162,7 +162,7 @@
                        
                         <th>Tanggal Transaksi</th>
                         <th>Trx ID</th>
-                        <th>Dibuat Oleh</th>
+                        {{-- <th>Dibuat Oleh</th> --}}
                         <th>Kategori</th>
                         <th>Total</th>
                         <th>Catatan</th>
@@ -175,7 +175,7 @@
                         <tr>
                             <td>{{date('d-M-Y', strtotime($t->transaction->transaction_date))}}</td>
                             <td>{{ $t->transaction->invoice }}</td>
-                            <td>{{ $t->transaction->user->name }}</td>
+                            {{-- <td>{{ $t->transaction->user?->name }}</td> --}}
                             <td>{{ $t->category->title }}</td>
                             <td>{{ number_format($t->amount, 0, ',','.')}}</td>
                             <td>{{ $t->notes }}</td>
